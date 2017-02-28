@@ -53,8 +53,18 @@ class Board extends CI_Controller {
   //View Post
   public function view()
 	{
+
 		$data['views'] = $this->Board_m->get_view($this->uri->segment(3));
-		$this->load->view('board/View_v', $data);
+
+		//If returned data from Model is 404, then load 404 page
+		if($data['views'] =="404")
+		{
+			$this->load->view('errors/custom404');
+		}
+		else
+		{
+			$this->load->view('board/View_v', $data);
+		}
 	}// <-- View function ends
 
   //Create New Post
@@ -134,7 +144,7 @@ class Board extends CI_Controller {
 		//break down current uri address and put them into an array
 		$uri_array = $this->check_uri($this->uri->uri_string());
     // var_dump($uri_array);
-    
+
 		//If 'search' exists in the uri_array
 		if(in_array('search',$uri_array))
 		{

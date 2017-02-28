@@ -16,6 +16,15 @@ body{
   text-align: center;
 }
 
+/*Custom 404 page*/
+#code_404{
+  width:100%;
+  height:500px;
+  background: url('/include/image/404.png') no-repeat;
+  background-size:cover;
+  background-position: center center;
+}
+
 /*Main Page Style*/
 #main_list{
   margin-bottom: 1em;

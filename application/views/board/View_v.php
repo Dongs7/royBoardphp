@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <h2 class="lead text_center"> royBoard/View Post</h2>
 <div class="view_wrapper">
   <div class="container">

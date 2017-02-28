@@ -37,15 +37,36 @@ class Board_m extends CI_Model {
     return $result;
   }
 
-  function get_view($id)
+  function get_view($title)
   {
-    $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
-    $this->db->query($counter_update);
+    //Revert changed title data to the original value
+    //Convert dashes to white spaces
+    $revert = preg_replace("/[-]/"," ",$title);
 
-    $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
-    $query = $this->db->query($sql);
+    //Find id where its title value is the same as parameter
+    $id_query = "SELECT id FROM ci_board WHERE title='".$revert."'";
+    $query0 = $this->db->query($id_query);
 
-    $result = $query->row();
+    //Check the number of rows returned
+    $num_result = $query0->num_rows();
+
+    //if 0, no matching data found. Query returns null.
+    //SEND 404 value to the controller
+    if($num_result == 0)
+    {
+      $result = '404';
+    }
+    else
+    {
+      $id = $query0->row()->id;
+      $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
+      $this->db->query($counter_update);
+
+      $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
+      $query = $this->db->query($sql);
+
+      $result = $query->row();
+    }
     // var_dump($result);
     return $result;
   }

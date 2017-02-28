@@ -1,3 +1,6 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <h2 class="lead text_center"><i>roysBoard in PHP, MySQL, CodeIgniter and Bootstrap</i></h2>
 <?php if(($search_term) != '') {?>
   <h3 class="text_center">Search Result: <i><?php echo $search_term;?></i></h3>
@@ -23,7 +26,15 @@ foreach ($list as $lt)
   <tr>
 
     <td class="post_list" id="post_title">
-       <a href="/board/view/<?php echo $lt->id?>"><?php echo $lt->title;?></a>
+      <!--
+       Get title data from controller, then if title contains
+       white spaces, replace them to dashes.
+      -->
+      <?php
+        $title_sting = $lt->title;
+        $changed = preg_replace("/[\s_]/", "-", $title_sting);
+      ?>
+       <a href="/board/view/<?php echo $changed?>"><?php echo $lt->title;?></a>
     </td>
     <td class="post_list"><?php echo $lt->author;?></td>
     <td class="post_list"><?php echo $lt->count;?></td>
