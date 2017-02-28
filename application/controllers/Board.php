@@ -101,21 +101,22 @@ class Board extends CI_Controller {
 
 		if($_POST)
 		{
-			// if(!$this->input->post('title', TRUE) OR !$this->input->post('content', TRUE))
-			// {
-			// 	// alert("Title / Content cannot be empty. Please check again");
-			// 	exit;
-			// }
 
 			$edit_post = array(
-				'id' => $current_id,
 				'title' => $this->input->post('title_e', TRUE),
 				'contents' => $this->input->post('content_e', TRUE),
 				'editedAt' => date('Y-m-d H:i:s'),
 			);
 
-			// $result = $this->Board_m->new_post($create_post);
-			redirect('board/view/'.$current_id, $this->Board_m->modify_post($edit_post, $current_id));
+			//Modified title is an array and contains two values.
+			//Bool and New Title data as a string
+			$modified_title = $this->board_m->modify_post($edit_post, $current_post_title);
+			// var_dump($modified_title);
+			//run changeTitle function to convert any white spaces to dashes
+			$new_title = $this->changeTitle($modified_title['title']);
+
+			//Redirect to the post showing modified title in the URL.
+			redirect('board/view/'.$new_title);
 
 		}else
 		{
@@ -183,10 +184,20 @@ class Board extends CI_Controller {
 		$this->load->view('board/List_v', $data);
   }
 
+	// $delimiter ='/'
+	// function to break down the URL by delimiter
   public function check_uri($addr)
 	{
 		$ready = str_replace('/', '/', $addr);
     $launch = explode('/', $ready);
     return  $launch;
 	}
+
+	//function to convert white spaces to dashes
+	public function changeTitle($title)
+  {
+		$change_1 = preg_replace("/[^A-Za-z0-9\-\s_]/", "",$title);
+    $change = preg_replace("/[\s_]/", "-", $change_1);
+    return $change;
+  }
 }

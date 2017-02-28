@@ -27,7 +27,7 @@ class Board_m extends CI_Model {
     $sql = "SELECT * FROM ci_board".$search_query." ORDER BY id DESC".$limit_query;
     $query = $this->db->query($sql);
 
-    //If type parameter value is count, then return total num of rows.
+    //If type parameter value is a count, then return total num of rows.
     if($type == 'count'){
       $result = $query->num_rows();
     }else{
@@ -39,15 +39,23 @@ class Board_m extends CI_Model {
 
   function get_view($title)
   {
-    //Revert changed title data to the original value
-    //Convert dashes to white spaces
-    $revert = preg_replace("/[-]/"," ",$title);
+    //read string after the last dash
+    $revert1 = substr($title, strrpos($title,'-') + 1);
 
-    //Find id where its title value is the same as parameter
-    $id_query = "SELECT id FROM ci_board WHERE title='".$revert."'";
+    //Replace dashes to %
+    $revert2 = preg_replace("/[-]/","%",$title);
+
+    //Replace numbers to %
+    $revert3 = preg_replace("/[0-9]/","%",$revert2);
+
+    // var_dump($revert);
+    // var_dump($revert1);
+    $like_query = " WHERE title like '%".$revert3."%'";
+    $not_like_query = "and title not like '%".$revert1."'";
+    $id_query = 'SELECT * FROM ci_board'.$like_query .$not_like_query.' AND id='.$revert1;
+    // var_dump($id_query);
+    // $id_query = "SELECT * FROM ci_board WHERE title like '%".$revert."%' AND id='".$revert1."'";
     $query0 = $this->db->query($id_query);
-
-    //Check the number of rows returned
     $num_result = $query0->num_rows();
 
     //if 0, no matching data found. Query returns null.
@@ -86,20 +94,42 @@ class Board_m extends CI_Model {
     return $result;
   }
 
-  function modify_post($arrays)
+  function modify_post($arrays, $title)
   {
-    $where = array(
-      'id' => $arrays['id']
-    );
+    // $check = revertTitle($title);
+    // $revert = preg_replace("/[-]/"," ",$title);
+    $revert1 = substr($title, strrpos($title,'-') + 1);
+    $id_query = 'SELECT * FROM ci_board WHERE id="'.$revert1.'"';
+    // $id_query = 'SELECT id FROM ci_board WHERE title like "%'.$revert.'%"';
+    $query0 = $this->db->query($id_query);
+    $num_result = $query0->num_rows();
 
-    $edit_sql = array(
-      'title'=> $arrays['title'],
-      'contents'=> $arrays['contents'],
-      'editedAt'=> $arrays['editedAt'],
-    );
+    if($num_result == 0){
+      $result = '404';
+    }
+    else
+    {
+      $id = $query0->row()->id;
+      // var_dump($where);
 
-    $result = $this->db->update('ci_board', $edit_sql, $where);
+      $edit_sql = array(
+        'title'=> $arrays['title'],
+        'contents'=> $arrays['contents'],
+        'editedAt'=> $arrays['editedAt'],
+      );
+      $this->db->where('id', $id);
+      $result1 = $this->db->update('ci_board', $edit_sql);
+      $query1 = "SELECT title FROM ci_board where id='".$id."'";
 
+      $get_new_title = $this->db->query($query1);
+      $result2 = $get_new_title->row()->title;
+
+      $result = array(
+        'result' => $result1,
+        'title' => $result2.'-'.$id
+      );
+      // var_dump($result);
+    }
     return $result;
   }
 
