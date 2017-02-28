@@ -70,7 +70,7 @@ class Board extends CI_Controller {
 		$this->load->library('pagination');
 
 		$config['base_url'] = '/board/main'.$page_uri;
-		$config['total_rows'] = $this->board_m->get_list('count','','',$search_word);
+		$config['total_rows'] = $this->Board_m->get_list('count','','',$search_word);
 		$config['per_page'] = 10;
 		// $config['cur_tag_open'] = '<b>';
 
