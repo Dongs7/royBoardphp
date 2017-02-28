@@ -37,55 +37,55 @@ class Board_m extends CI_Model {
     return $result;
   }
 
-  // function get_view($id)
-  // {
-  //   $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
-  //   $this->db->query($counter_update);
-  //
-  //   $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
-  //   $query = $this->db->query($sql);
-  //
-  //   $result = $query->row();
-  //   // var_dump($result);
-  //   return $result;
-  // }
-  //
-  // function new_post($arrays)
-  // {
-  //   $create_sql = array(
-  //     'author'=> $arrays['author'],
-  //     'title'=> $arrays['title'],
-  //     'contents'=> $arrays['contents'],
-  //     'count' => $arrays['count'],
-  //     'createdAt'=> $arrays['createdAt'],
-  //   );
-  //
-  //   $result = $this->db->insert('ci_board', $create_sql);
-  //
-  //   return $result;
-  // }
-  //
-  // function modify_post($arrays)
-  // {
-  //   $where = array(
-  //     'id' => $arrays['id']
-  //   );
-  //
-  //   $edit_sql = array(
-  //     'title'=> $arrays['title'],
-  //     'contents'=> $arrays['contents'],
-  //     'editedAt'=> $arrays['editedAt'],
-  //   );
-  //
-  //   $result = $this->db->update('ci_board', $edit_sql, $where);
-  //
-  //   return $result;
-  // }
-  //
-  // function delete_post($id)
-  // {
-  //   $sql = "DELETE FROM ci_board WHERE id='".$id."'";
-  //   $this->db->query($sql);
-  //
-  // }
+  function get_view($id)
+  {
+    $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
+    $this->db->query($counter_update);
+
+    $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
+    $query = $this->db->query($sql);
+
+    $result = $query->row();
+    // var_dump($result);
+    return $result;
+  }
+
+  function new_post($arrays)
+  {
+    $create_sql = array(
+      'author'=> $arrays['author'],
+      'title'=> $arrays['title'],
+      'contents'=> $arrays['contents'],
+      'count' => $arrays['count'],
+      'createdAt'=> $arrays['createdAt'],
+    );
+
+    $result = $this->db->insert('ci_board', $create_sql);
+
+    return $result;
+  }
+
+  function modify_post($arrays)
+  {
+    $where = array(
+      'id' => $arrays['id']
+    );
+
+    $edit_sql = array(
+      'title'=> $arrays['title'],
+      'contents'=> $arrays['contents'],
+      'editedAt'=> $arrays['editedAt'],
+    );
+
+    $result = $this->db->update('ci_board', $edit_sql, $where);
+
+    return $result;
+  }
+
+  function delete_post($id)
+  {
+    $sql = "DELETE FROM ci_board WHERE id='".$id."'";
+    $this->db->query($sql);
+
+  }
 }
