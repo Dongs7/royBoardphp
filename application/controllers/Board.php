@@ -30,9 +30,9 @@ class Board extends CI_Controller {
 	public function index()
 	{
     $this->main();
-		// $this->load->view('welcom_2');
 	}
 
+  //Function to include header and footer on load
   public function _remap($method)
   {
     //include Header
@@ -47,9 +47,82 @@ class Board extends CI_Controller {
 
 		//include Footer
 		$this->load->view('footer_v');
-  }
+  }// <-- _remap ends
 
 
+  //View Post
+  public function view()
+	{
+		$data['views'] = $this->board_m->get_view($this->uri->segment(3));
+		$this->load->view('board/View_v', $data);
+	}// <-- View function ends
+
+  //Create New Post
+	public function create()
+	{
+		// $this->load->helper('url');
+		// echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
+		if($_POST)
+		{
+
+			$create_post = array(
+				'author' => $this->input->post('author', TRUE),
+				'title' => $this->input->post('title', TRUE),
+				'contents' => $this->input->post('content', TRUE),
+				'count' => '0',
+				'createdAt' => date('Y-m-d H:i:s'),
+			);
+
+			// $result = $this->board_m->new_post($create_post);
+			redirect('board/main/', $this->board_m->new_post($create_post));
+
+		}else
+		{
+			$this->load->view('board/Create_v');
+		}
+	}// <-- Create function ends
+
+
+  //Edit Post
+	public function edit()
+	{
+		$current_id = $this->uri->segment(3);
+
+		if($_POST)
+		{
+			// if(!$this->input->post('title', TRUE) OR !$this->input->post('content', TRUE))
+			// {
+			// 	// alert("Title / Content cannot be empty. Please check again");
+			// 	exit;
+			// }
+
+			$edit_post = array(
+				'id' => $current_id,
+				'title' => $this->input->post('title_e', TRUE),
+				'contents' => $this->input->post('content_e', TRUE),
+				'editedAt' => date('Y-m-d H:i:s'),
+			);
+
+			// $result = $this->board_m->new_post($create_post);
+			redirect('board/view/'.$current_id, $this->board_m->modify_post($edit_post, $current_id));
+
+		}else
+		{
+			$data['e_view'] = $this->board_m->get_view($this->uri->segment(3));
+			$this->load->view('board/Edit_v', $data);
+		}
+	}// <-- Edit function ends
+
+
+  //Delete Post
+	public function delete()
+	{
+		$current_id = $this->uri->segment(3);
+		$this->board_m->delete_post($current_id);
+
+		redirect('board/main/');
+	}// <-- Delete function ends
 
   public function main()
   {
