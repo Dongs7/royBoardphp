@@ -53,7 +53,7 @@ class Board extends CI_Controller {
   //View Post
   public function view()
 	{
-		$data['views'] = $this->board_m->get_view($this->uri->segment(3));
+		$data['views'] = $this->Board_m->get_view($this->uri->segment(3));
 		$this->load->view('board/View_v', $data);
 	}// <-- View function ends
 
@@ -74,8 +74,8 @@ class Board extends CI_Controller {
 				'createdAt' => date('Y-m-d H:i:s'),
 			);
 
-			// $result = $this->board_m->new_post($create_post);
-			redirect('board/main/', $this->board_m->new_post($create_post));
+			// $result = $this->Board_m->new_post($create_post);
+			redirect('board/main/', $this->Board_m->new_post($create_post));
 
 		}else
 		{
@@ -104,12 +104,12 @@ class Board extends CI_Controller {
 				'editedAt' => date('Y-m-d H:i:s'),
 			);
 
-			// $result = $this->board_m->new_post($create_post);
-			redirect('board/view/'.$current_id, $this->board_m->modify_post($edit_post, $current_id));
+			// $result = $this->Board_m->new_post($create_post);
+			redirect('board/view/'.$current_id, $this->Board_m->modify_post($edit_post, $current_id));
 
 		}else
 		{
-			$data['e_view'] = $this->board_m->get_view($this->uri->segment(3));
+			$data['e_view'] = $this->Board_m->get_view($this->uri->segment(3));
 			$this->load->view('board/Edit_v', $data);
 		}
 	}// <-- Edit function ends
