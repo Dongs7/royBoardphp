@@ -119,10 +119,12 @@ class Board extends CI_Controller {
 	public function delete()
 	{
 		$current_id = $this->uri->segment(3);
-		$this->board_m->delete_post($current_id);
+		$this->Board_m->delete_post($current_id);
 
 		redirect('board/main/');
 	}// <-- Delete function ends
+
+
 
   public function main()
   {
