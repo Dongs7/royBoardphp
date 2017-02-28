@@ -95,4 +95,11 @@ class Board extends CI_Controller {
 		$data['search_term'] = $search_word;
 		$this->load->view('board/List_v', $data);
   }
+
+  public function check_uri($addr)
+	{
+		$ready = str_replace('/', '/', $addr);
+    $launch = explode('/', $ready);
+    return  $launch;
+	}
 }
