@@ -15,7 +15,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <script type="text/javascript" src="/public/js/jquery.js"></script>
   <script src="https://use.fontawesome.com/a932d2807f.js"></script>
   <script type="text/javascript" src="/public/js/bootstrap.min.js"></script>
-  <!-- <script type="text/javascript" src="/public/js/master.js"></script> -->
+  <script type="text/javascript" src="/public/js/master.js"></script>
 
   <title>roysBoard</title>
 </head>
