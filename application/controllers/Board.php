@@ -20,6 +20,12 @@ class Board extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('welcom_2');
+    $this->main();
+		// $this->load->view('welcom_2');
 	}
+
+  public function main()
+  {
+    $this->load->view('welcom_2');
+  }
 }
