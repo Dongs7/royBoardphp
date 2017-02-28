@@ -31,10 +31,13 @@ foreach ($list as $lt)
        white spaces, replace them to dashes.
       -->
       <?php
+        $get_date = date_create($lt->createdAt);
         $title_sting = $lt->title;
-        $changed = preg_replace("/[\s_]/", "-", $title_sting);
+        $change_1 = preg_replace("/[^A-Za-z0-9\-\s_]/", "",$title_sting);
+        $changed = preg_replace("/[\s_]/", "-", $change_1);
       ?>
-       <a href="/board/view/<?php echo $changed?>"><?php echo $lt->title;?></a>
+      <a href="/board/view/<?php echo $changed;?>-<?php echo $lt->id;?>"><?php echo $lt->title;?></a><br/>
+      <small><i>created at <?php echo date_format($get_date, 'Y-m-d g:i A')?></i></small>
     </td>
     <td class="post_list"><?php echo $lt->author;?></td>
     <td class="post_list"><?php echo $lt->count;?></td>

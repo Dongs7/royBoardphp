@@ -27,9 +27,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <a href="/board/main/"><button class="btn btn-warning" type="button" name="button">BACK</button></a>
     <div class="tool">
-      <a href="/board/edit/<?php echo $views->id;?>" class="back_btn"><button class="btn btn-info" type="button" name="button">EDIT</button></a>
+      <?php
+        $title_sting = $views->title;
+        $change_1 = preg_replace("/[^A-Za-z0-9\-\s_]/", "",$title_sting);
+        $changed = preg_replace("/[\s_]/", "-", $change_1);
+      ?>
+      <a href="/board/edit/<?php echo $changed;?>-<?php echo $views->id; ?>" class="back_btn"><button class="btn btn-info" type="button" name="button">EDIT</button></a>
       <button class="btn btn-danger" type="button" name="button" data-toggle="modal" data-target="#deleteHelper">DELETE</button>
-
     </div>
 
   </div>
