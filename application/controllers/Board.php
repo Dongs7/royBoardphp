@@ -58,7 +58,7 @@ class Board extends CI_Controller {
 
 		//break down current uri address and put them into an array
 		$uri_array = $this->check_uri($this->uri->uri_string());
-
+    var_dump($uri_array);
 		//If 'search' exists in the uri_array
 		if(in_array('search',$uri_array))
 		{
