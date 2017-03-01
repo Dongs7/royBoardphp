@@ -13,12 +13,12 @@ $(document).ready(function(){
       }
   });
 
-  function search_enter_key(form){
-      var keycode = window.event.keyCode;
-      if(keycode == 13)
-      {
-        $('#search_btn').click();
-      }
-  }
-
 });
+
+function key_search(event)
+{
+  var keycode = event.keyCode;
+  if(keycode == 13){
+    $('#search_btn').click();
+  }
+}

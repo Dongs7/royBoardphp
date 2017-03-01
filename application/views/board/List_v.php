@@ -62,7 +62,7 @@ foreach ($list as $lt)
 
   <div class="tool">
     <form id="post_search" method="post">
-      <input id="search_key" type="text" name="" placeholder="search term" onkeypress='search_enter_key(document.search_key);'>
+      <input id="search_key" type="text" name="" placeholder="search term" onkeypress='key_search(event);'>
       <button id="search_btn" type="button" name="button"><i class="fa fa-search"></i></button>
     </form>
   </div>
