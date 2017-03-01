@@ -42,38 +42,47 @@ class Board_m extends CI_Model {
     //read string after the last dash
     $revert1 = substr($title, strrpos($title,'-') + 1);
 
-    //Replace dashes to %
-    $revert2 = preg_replace("/[-]/","%",$title);
-
-    //Replace numbers to %
-    $revert3 = preg_replace("/[0-9]/","%",$revert2);
-
-    // var_dump($revert);
-    // var_dump($revert1);
-    $like_query = " WHERE title like '%".$revert3."%'";
-    $not_like_query = " AND title not like '%".$revert1."'";
-    $id_query = 'SELECT * FROM ci_board'.$like_query .$not_like_query.' AND id='.$revert1;
-    // var_dump($id_query);
-    // $id_query = "SELECT * FROM ci_board WHERE title like '%".$revert."%' AND id='".$revert1."'";
-    $query0 = $this->db->query($id_query);
-    $num_result = $query0->num_rows();
-
-    //if 0, no matching data found. Query returns null.
-    //SEND 404 value to the controller
-    if($num_result == 0)
+    //Check if $revert1 field contains any string
+    //If so, throw 404
+    if(preg_match('/[a-z\.]/i', $revert1))
     {
-      $result = '404';
+      $result = "404";
     }
     else
     {
-      $id = $query0->row()->id;
-      $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
-      $this->db->query($counter_update);
+      //Replace dashes to %
+      $revert2 = preg_replace("/[-]/","%",$title);
 
-      $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
-      $query = $this->db->query($sql);
+      //Replace numbers to %
+      $revert3 = preg_replace("/[0-9]/","%",$revert2);
 
-      $result = $query->row();
+      // var_dump($revert);
+      // var_dump($revert1);
+      $like_query = " WHERE title like '%".$revert3."%'";
+      $not_like_query = " AND title not like '%".$revert1."'";
+      $id_query = 'SELECT * FROM ci_board'.$like_query .$not_like_query.' AND id='.$revert1;
+      // var_dump($id_query);
+      // $id_query = "SELECT * FROM ci_board WHERE title like '%".$revert."%' AND id='".$revert1."'";
+      $query0 = $this->db->query($id_query);
+      $num_result = $query0->num_rows();
+
+      //if 0, no matching data found. Query returns null.
+      //SEND 404 value to the controller
+      if($num_result == 0)
+      {
+        $result = '404';
+      }
+      else
+      {
+        $id = $query0->row()->id;
+        $counter_update = "UPDATE ci_board SET count = count + 1 WHERE id='".$id."'";
+        $this->db->query($counter_update);
+
+        $sql = "SELECT * FROM ci_board WHERE id='".$id."'";
+        $query = $this->db->query($sql);
+
+        $result = $query->row();
+      }
     }
     // var_dump($result);
     return $result;
