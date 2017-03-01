@@ -97,7 +97,7 @@ class Board extends CI_Controller {
   //Edit Post
 	public function edit()
 	{
-		$current_id = $this->uri->segment(3);
+		$current_post_title = $this->uri->segment(3);
 
 		if($_POST)
 		{
@@ -110,7 +110,7 @@ class Board extends CI_Controller {
 
 			//Modified title is an array and contains two values.
 			//Bool and New Title data as a string
-			$modified_title = $this->Board_m->modify_post($edit_post, $current_post_title);
+			$modified_title = $this->board_m->modify_post($edit_post, $current_post_title);
 			// var_dump($modified_title);
 			//run changeTitle function to convert any white spaces to dashes
 			$new_title = $this->changeTitle($modified_title['title']);
@@ -118,13 +118,23 @@ class Board extends CI_Controller {
 			//Redirect to the post showing modified title in the URL.
 			redirect('board/view/'.$new_title);
 
-		}else
-		{
-			$data['e_view'] = $this->Board_m->get_view($this->uri->segment(3));
-			$this->load->view('board/Edit_v', $data);
 		}
-	}// <-- Edit function ends
+		else
+		{
+			$data['e_view'] = $this->board_m->get_view($this->uri->segment(3));
 
+			if($data['e_view'] == '404')
+			{
+				$this->load->view('errors/custom404');
+			}
+			else
+			{
+				$this->load->view('board/Edit_v', $data);
+			}
+
+
+		}
+	}
 
   //Delete Post
 	public function delete()
