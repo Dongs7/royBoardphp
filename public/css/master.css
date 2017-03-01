@@ -20,7 +20,7 @@ body{
 #code_404{
   width:100%;
   height:500px;
-  background: url('./include/image/404.png') no-repeat;
+  background: url('/include/image/404.png') no-repeat;
   background-size:cover;
   background-position: center center;
 }
