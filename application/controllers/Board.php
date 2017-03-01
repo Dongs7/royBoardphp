@@ -121,7 +121,7 @@ class Board extends CI_Controller {
 		}
 		else
 		{
-			$data['e_view'] = $this->board_m->get_view($this->uri->segment(3));
+			$data['e_view'] = $this->Board_m->get_view($this->uri->segment(3));
 
 			if($data['e_view'] == '404')
 			{
