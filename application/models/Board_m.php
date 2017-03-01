@@ -51,7 +51,7 @@ class Board_m extends CI_Model {
     // var_dump($revert);
     // var_dump($revert1);
     $like_query = " WHERE title like '%".$revert3."%'";
-    $not_like_query = "and title not like '%".$revert1."'";
+    $not_like_query = " AND title not like '%".$revert1."'";
     $id_query = 'SELECT * FROM ci_board'.$like_query .$not_like_query.' AND id='.$revert1;
     // var_dump($id_query);
     // $id_query = "SELECT * FROM ci_board WHERE title like '%".$revert."%' AND id='".$revert1."'";
