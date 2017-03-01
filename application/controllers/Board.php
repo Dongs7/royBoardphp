@@ -110,7 +110,7 @@ class Board extends CI_Controller {
 
 			//Modified title is an array and contains two values.
 			//Bool and New Title data as a string
-			$modified_title = $this->board_m->modify_post($edit_post, $current_post_title);
+			$modified_title = $this->Board_m->modify_post($edit_post, $current_post_title);
 			// var_dump($modified_title);
 			//run changeTitle function to convert any white spaces to dashes
 			$new_title = $this->changeTitle($modified_title['title']);
