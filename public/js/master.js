@@ -13,4 +13,12 @@ $(document).ready(function(){
       }
   });
 
+  function search_enter_key(form){
+      var keycode = window.event.keycode;
+      if(keycode == 13)
+      {
+        $('#search_btn').click();
+      }
+  }
+
 });
